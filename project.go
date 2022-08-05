@@ -49,7 +49,7 @@ type projectDTO struct {
 	Project *Project `json:"project"`
 }
 
-func (c *FreeAgent) PostProject(project *Project) (*Project, error) {
+func (c *Client) PostProject(project *Project) (*Project, error) {
 	request := &projectDTO{project}
 	response := &projectDTO{}
 	err := c.post("/projects", request, response)
@@ -60,7 +60,7 @@ func (c *FreeAgent) PostProject(project *Project) (*Project, error) {
 	return response.Project, nil
 }
 
-func (c *FreeAgent) GetProject(id string) (*Project, error) {
+func (c *Client) GetProject(id string) (*Project, error) {
 	result := &projectDTO{}
 	err := c.get("/projects/"+id, result)
 	if err != nil {
@@ -100,7 +100,7 @@ type projectsDTO struct {
 	Projects []*Project `json:"projects"`
 }
 
-func (c *FreeAgent) GetProjects(q *ProjectQuery) ([]*Project, error) {
+func (c *Client) GetProjects(q *ProjectQuery) ([]*Project, error) {
 	result := &projectsDTO{}
 	err := c.get("/projects", result)
 	if err != nil {

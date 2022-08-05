@@ -28,7 +28,7 @@ type timeslipDTO struct {
 	Timeslip *Timeslip `json:"timeslip"`
 }
 
-func (c *FreeAgent) PostTimeslip(timeslip *Timeslip) (*Timeslip, error) {
+func (c *Client) PostTimeslip(timeslip *Timeslip) (*Timeslip, error) {
 	request := &timeslipDTO{timeslip}
 	response := &timeslipDTO{}
 	err := c.post("/timeslips", request, response)
@@ -39,7 +39,7 @@ func (c *FreeAgent) PostTimeslip(timeslip *Timeslip) (*Timeslip, error) {
 	return response.Timeslip, nil
 }
 
-func (c *FreeAgent) GetTimeslip(id string) (*Timeslip, error) {
+func (c *Client) GetTimeslip(id string) (*Timeslip, error) {
 	result := &timeslipDTO{}
 	err := c.get("/timeslips/"+id, result)
 	if err != nil {
@@ -64,7 +64,7 @@ type TimeslipQuery struct {
 	View         TimeslipView
 }
 
-func (c *FreeAgent) GetTimeslips(q *TimeslipQuery) ([]*Timeslip, error) {
+func (c *Client) GetTimeslips(q *TimeslipQuery) ([]*Timeslip, error) {
 	log.Fatal("Not implemented")
 	return nil, nil
 }

@@ -13,7 +13,7 @@ func main() {
 	accessToken := os.Args[1]
 	timeslipID := os.Args[2]
 
-	fa := &freeagent.FreeAgent{
+	fa := &freeagent.Client{
 		Endpoint:    freeagent.SandboxEndpoint,
 		AccessToken: accessToken,
 	}

@@ -13,8 +13,8 @@ import (
 const LiveEndpoint = "https://api.freeagent.com/v2"
 const SandboxEndpoint = "https://api.sandbox.freeagent.com/v2"
 
-type FreeAgent struct {
-	Client      http.Client
+type Client struct {
+	HTTPClient  http.Client
 	Endpoint    string
 	AccessToken string
 }
@@ -27,7 +27,7 @@ type errorsDTO struct {
 	} `json:"errors"`
 }
 
-func (c *FreeAgent) get(path string, result any) error {
+func (c *Client) get(path string, result any) error {
 	parsedURL, err := url.Parse(c.Endpoint + path)
 	if err != nil {
 		return err
@@ -39,7 +39,7 @@ func (c *FreeAgent) get(path string, result any) error {
 			"Accept":        {"application/json"},
 		},
 	}
-	response, err := c.Client.Do(req)
+	response, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,7 @@ func (c *FreeAgent) get(path string, result any) error {
 	return c.parseResponse(response, result)
 }
 
-func (c *FreeAgent) post(path string, request any, response any) error {
+func (c *Client) post(path string, request any, response any) error {
 	parsedURL, err := url.Parse(c.Endpoint + path)
 	if err != nil {
 		return err
@@ -69,7 +69,7 @@ func (c *FreeAgent) post(path string, request any, response any) error {
 		},
 		Body: io.NopCloser(bytes.NewReader(body)),
 	}
-	res, err := c.Client.Do(req)
+	res, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func (c *FreeAgent) post(path string, request any, response any) error {
 	return c.parseResponse(res, response)
 }
 
-func (c *FreeAgent) parseResponse(res *http.Response, response any) error {
+func (c *Client) parseResponse(res *http.Response, response any) error {
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		return err

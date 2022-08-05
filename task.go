@@ -30,7 +30,7 @@ type taskDTO struct {
 	Task *Task `json:"task"`
 }
 
-func (c *FreeAgent) PostTask(task *Task) (*Task, error) {
+func (c *Client) PostTask(task *Task) (*Task, error) {
 	request := &taskDTO{task}
 	response := &taskDTO{}
 	err := c.post("/tasks", request, response)
@@ -41,7 +41,7 @@ func (c *FreeAgent) PostTask(task *Task) (*Task, error) {
 	return response.Task, nil
 }
 
-func (c *FreeAgent) GetTask(id string) (*Task, error) {
+func (c *Client) GetTask(id string) (*Task, error) {
 	result := &taskDTO{}
 	err := c.get("/tasks/"+id, result)
 	if err != nil {
@@ -80,7 +80,7 @@ type tasksDTO struct {
 	Tasks []*Task `json:"tasks"`
 }
 
-func (c *FreeAgent) GetTasks(q *TaskQuery) ([]*Task, error) {
+func (c *Client) GetTasks(q *TaskQuery) ([]*Task, error) {
 	result := &tasksDTO{}
 	err := c.get("/tasks", result)
 	if err != nil {
